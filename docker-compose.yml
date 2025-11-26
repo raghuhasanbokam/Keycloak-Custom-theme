@@ -7,17 +7,19 @@ services:
         - 8443:8443
       volumes:
         - ./certs:/etc/x509/https:ro
+      env_file:
+        - .env
       environment:
-        KC_HOSTNAME: localhost
-        KC_HTTP_ENABLED: "false"
+        KC_HOSTNAME: ${KC_HOSTNAME:-localhost}
+        KC_HTTP_ENABLED: ${KC_HTTP_ENABLED:-false}
         KC_HTTPS_CERTIFICATE_FILE: /etc/x509/https/tls.crt
         KC_HTTPS_CERTIFICATE_KEY_FILE: /etc/x509/https/tls.key
-        KC_DB: mysql
-        KC_DB_URL: jdbc:mysql://taskiumlake.czf3fstl3xv4.us-east-2.rds.amazonaws.com:3306/keycloak
-        KC_DB_USERNAME: admin
-        KC_DB_PASSWORD: taskium1!
-        KEYCLOAK_ADMIN: admin
-        KEYCLOAK_ADMIN_PASSWORD: admin
-        KC_HEALTH_ENABLED: "true"
-        KC_LOG_LEVEL: info
+        KC_DB: ${KC_DB:-mysql}
+        KC_DB_URL: ${KC_DB_URL}
+        KC_DB_USERNAME: ${KC_DB_USERNAME}
+        KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+        KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+        KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+        KC_HEALTH_ENABLED: ${KC_HEALTH_ENABLED:-true}
+        KC_LOG_LEVEL: ${KC_LOG_LEVEL:-info}
 
