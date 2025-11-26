@@ -223,6 +223,184 @@ themes/custom-theme/theme/Taskium/
 2. Rebuild the Docker image: `docker build -t raghuhasan/taskium-keycloak:centered .`
 3. Restart the container: `docker-compose restart`
 
+## Customizing the Theme
+
+This section details which files you should modify to customize different aspects of the theme.
+
+### File Structure Overview
+
+```
+themes/custom-theme/theme/Taskium/login/
+├── login.ftl                    # Main login page HTML structure
+├── template.ftl                  # Base page template (HTML structure)
+├── theme.properties             # Theme configuration and CSS/JS references
+├── messages/
+│   └── messages_en.properties   # Text content and labels
+└── resources/
+    ├── css/
+    │   ├── styles.css           # Main custom styles
+    │   ├── overrides.css        # Keycloak style overrides
+    │   └── custom-font.css      # Font face definitions
+    ├── fonts/                   # Custom font files
+    └── img/                     # Logo and image assets
+```
+
+### Files to Customize
+
+#### 1. **Logo and Branding Images**
+**File:** `themes/custom-theme/theme/Taskium/login/resources/img/`
+
+- Replace `7T.png` with your logo file
+- Replace `7T-AI-Logo-Blue.jpg` with alternative logo if needed
+- Supported formats: PNG, JPG, SVG
+- Recommended logo size: 200px width, 60px height
+
+**Update in `login.ftl` (line 6):**
+```ftl
+<img src="${url.resourcesPath}/img/your-logo.png" alt="Your Company Logo" class="logo" ...>
+```
+
+#### 2. **Login Page Content and Structure**
+**File:** `themes/custom-theme/theme/Taskium/login/login.ftl`
+
+Customize:
+- **Logo and title** (lines 5-8): Change logo path, alt text, and page title
+- **Form labels** (lines 14, 20): Change "Email" and "Password" labels
+- **Placeholders** (lines 16, 23): Update input placeholder text
+- **Button text** (line 38): Change "Login" button text
+- **Forgot password link** (line 43): Customize link text
+- **Social login providers** (lines 46-88): Modify social provider display
+- **Footer text** (lines 90-92): Change "Powered by" text
+- **JavaScript functions** (lines 101-106): Add custom form behavior
+
+#### 3. **Colors and Visual Styling**
+**File:** `themes/custom-theme/theme/Taskium/login/resources/css/styles.css`
+
+Key customization areas:
+- **Background colors** (lines 5-8): Change `#f3f4f6` to your brand color
+- **Primary button color**: Search for `.login-button` and modify background color
+- **Input field styling**: Search for `.form-control` to customize input appearance
+- **Text colors**: Search for color definitions throughout the file
+- **Border radius**: Modify border-radius values for rounded corners
+- **Spacing**: Adjust margin and padding values
+
+**Common color variables to change:**
+```css
+/* Primary brand color */
+background-color: #your-color;
+
+/* Button colors */
+.login-button {
+  background-color: #your-primary-color;
+}
+
+/* Text colors */
+color: #your-text-color;
+```
+
+#### 4. **Font Customization**
+**File:** `themes/custom-theme/theme/Taskium/login/resources/css/custom-font.css`
+
+- Update font family name
+- Modify font file paths if using different fonts
+- Adjust font weights (300, 500, 600, 700, regular)
+
+**To use different fonts:**
+1. Add font files to `resources/fonts/` directory
+2. Update `@font-face` declarations in `custom-font.css`
+3. Update font-family references in `styles.css`
+
+**File:** `themes/custom-theme/theme/Taskium/login/resources/fonts/`
+
+- Replace Space Grotesk font files with your custom fonts
+- Ensure all font weights you need are included
+- Supported formats: `.woff2` (recommended), `.woff`, `.ttf`
+
+#### 5. **Text Content and Labels**
+**File:** `themes/custom-theme/theme/Taskium/login/messages/messages_en.properties`
+
+Customize all user-facing text:
+- Login page titles
+- Form labels
+- Error messages
+- Button text
+- Help text
+
+**Example:**
+```properties
+loginTitle=Your Company Login
+doLogIn=Sign In
+doForgotPassword=Forgot Your Password?
+```
+
+#### 6. **Theme Configuration**
+**File:** `themes/custom-theme/theme/Taskium/login/theme.properties`
+
+Customize:
+- **CSS file references** (line 4): Add/remove stylesheet files
+- **PatternFly classes** (lines 7-22): Modify CSS class mappings
+- **Icon classes** (line 23): Change social provider icons
+
+**To add additional CSS files:**
+```properties
+styles=css/custom-font.css css/overrides.css css/styles.css css/your-custom.css
+```
+
+#### 7. **Base Template Structure**
+**File:** `themes/custom-theme/theme/Taskium/login/template.ftl`
+
+**Advanced customization only** - Modify if you need to:
+- Change overall page structure
+- Add custom meta tags
+- Modify header/footer structure
+- Add global JavaScript libraries
+- Change language selector behavior
+
+⚠️ **Warning:** Modifying `template.ftl` can break theme functionality. Only edit if you understand FreeMarker templating.
+
+#### 8. **Style Overrides**
+**File:** `themes/custom-theme/theme/Taskium/login/resources/css/overrides.css`
+
+Use this file to:
+- Override Keycloak default styles
+- Fix compatibility issues
+- Add important style rules that need `!important` flags
+
+### Quick Customization Checklist
+
+- [ ] **Logo**: Replace images in `resources/img/` and update path in `login.ftl`
+- [ ] **Colors**: Update color values in `styles.css`
+- [ ] **Fonts**: Replace font files and update `custom-font.css`
+- [ ] **Text**: Update labels in `login.ftl` and `messages_en.properties`
+- [ ] **Branding**: Change "Powered by" text in `login.ftl`
+- [ ] **Button text**: Modify button labels in `login.ftl`
+
+### Testing Your Changes
+
+After making customizations:
+
+1. **Rebuild the Docker image:**
+   ```bash
+   docker build -t raghuhasan/taskium-keycloak:centered .
+   ```
+
+2. **Restart the container:**
+   ```bash
+   docker-compose restart
+   ```
+
+3. **Clear browser cache** and test the login page
+
+4. **Check browser console** for any CSS/asset loading errors
+
+### Theme Name Customization
+
+To rename the theme from "Taskium" to your brand name:
+
+1. Rename the theme directory: `Taskium/` → `YourThemeName/`
+2. Update `Dockerfile` if needed (the COPY command uses wildcards)
+3. Select your new theme name in Keycloak Admin Console → Realm Settings → Themes
+
 ## Security Notes
 
 ⚠️ **Important Security Reminders:**
