@@ -18,6 +18,14 @@
 }
 .pf-v5-c-login__main-header{
   text-align: center;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
 }
 
 .pf-c-button.pf-m-primary {
@@ -36,23 +44,23 @@
 
 .login-page-container {
   display: flex;
-  /* justify-content: center; */
-  /* flex-direction: row-reverse; */
+  justify-content: center;
   align-items: center;
   min-height: 100vh;
+  width: 100%;
 }
 
 .login-pf-page {
-  width: 33vw;
-  /* display: flex; */
+  width: 100% !important;
+  max-width: 520px !important;
+  margin: 0 auto !important;
+  background: white !important;
   align-items: center;
   justify-content: center;
-  background: white;
-  min-height: 100vh;
 }
 
 .login-pf-page .card-pf {
-  margin-top: 10rem;
+  margin-top: 0 !important;
   box-shadow: none;
 }
 
@@ -80,4 +88,38 @@
 
 .login-pf-page .card-pf {
   background-color: #fff;
+}
+
+/* Ensure Keycloak container is centered */
+.pf-v5-c-login__container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  width: 100% !important;
+  padding: 20px !important;
+}
+
+.pf-v5-c-login__main {
+  width: 100% !important;
+  max-width: 520px !important;
+  margin: 0 auto !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pf-v5-c-login__container {
+    padding: 16px !important;
+  }
+  
+  .login-pf-page {
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .pf-v5-c-login__container {
+    padding: 12px !important;
+  }
 }
